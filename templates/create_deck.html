@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if deck_id %}Edit Deck{% else %}Create Deck{% endif %} - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <form method="POST">
+            {% if deck_id %}
+            <input type="hidden" name="deck_id" value="{{ deck_id }}">
+            {% endif %}
+            <label for="deck_name">Deck Name:</label>
+            <input type="text" id="deck_name" name="deck_name" value="{{ deck_name }}" required>
+            <button type="submit">{% if deck_id %}Update Deck{% else %}Create Deck{% endif %}</button>
+        </form>
+        <p><a href="{{ url_for('decks') }}">Back to Decks</a></p>
+    </div>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Deck - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <form method="POST">
+            <label for="deck_name">New Deck Name:</label>
+            <input type="text" id="deck_name" name="deck_name" required>
+            <button type="submit">Create Deck</button>
+        </form>
+        <p><a href="{{ url_for('decks') }}">Back to Decks</a></p>
+    </div>
+</body>
+</html> -->

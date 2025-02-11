@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <div class="nav-bar">
+            <a href="{{ url_for('decks') }}">
+                <button>Decks</button>
+            </a>
+            <a href="{{ url_for('add_flashcards') }}">
+                <button>Add</button>
+            </a>
+            <a href="{{ url_for('help') }}">
+                <button>Help</button>
+            </a>
+        </div>
+        <div class="help-content">
+            <h2>Welcome to Flashcard Master!</h2>
+            <p>Here’s how to use the app to master any topic with smart flashcards:</p>
+
+            <h3>1. Creating Decks</h3>
+            <p>
+                - Go to the <strong>Decks Page</strong> and click the <strong>Create Deck</strong> button.<br>
+                - Enter a name for your deck and click <strong>Create Deck</strong>.<br>
+                - Your new deck will appear in the list on the Decks Page.
+            </p>
+
+            <h3>2. Adding Flashcards</h3>
+            <p>
+                - Go to the <strong>Decks Page</strong> and click the <strong>Add</strong> button in the navigation bar.<br>
+                - Select a deck from the dropdown menu.<br>
+                - Enter the <strong>Front</strong> (question) and <strong>Back</strong> (answer) of the flashcard.<br>
+                - Optionally, add <strong>Extra Information</strong> for additional context.<br>
+                - Click <strong>Add Flashcard</strong> to save it to the selected deck.
+            </p>
+
+            <h3>3. Reviewing Flashcards</h3>
+            <p>
+                - Go to the <strong>Decks Page</strong> and click on a deck to open the <strong>Review Preview Page</strong>.<br>
+                - Click the <strong>Study</strong> button to start reviewing flashcards.<br>
+                - On the <strong>Review Flashcards Page</strong>:<br>
+                &nbsp;&nbsp;- The <strong>Front</strong> of the flashcard is displayed first.<br>
+                &nbsp;&nbsp;- Click <strong>Show Answer</strong> or press the <strong>Spacebar</strong> to reveal the <strong>Back</strong> of the flashcard.<br>
+                &nbsp;&nbsp;- Optionally, click <strong>Show Extra Info</strong> to view additional information.<br>
+                &nbsp;&nbsp;- Rate your recall using the buttons:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Again</strong>: If you didn’t remember the answer.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Hard</strong>: If you remembered the answer with difficulty.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Good</strong>: If you remembered the answer correctly.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Easy</strong>: If you remembered the answer easily.<br>
+                - The app uses <strong>spaced repetition</strong> to schedule reviews for optimal retention.
+            </p>
+
+            <h3>4. Managing Decks</h3>
+            <p>
+                - On the <strong>Decks Page</strong>, you can:<br>
+                &nbsp;&nbsp;- <strong>Edit</strong> a deck by clicking the edit icon.<br>
+                &nbsp;&nbsp;- <strong>Delete</strong> a deck by clicking the delete icon.<br>
+                &nbsp;&nbsp;- <strong>Organize</strong> decks into a hierarchy by dragging and dropping.
+            </p>
+
+            <h3>5. Logging Out</h3>
+            <p>
+                - Click the <strong>Logout</strong> button on the Decks Page to log out of your account.
+            </p>
+
+            <h3>Need More Help?</h3>
+            <p>
+                If you have any questions or need further assistance, please contact us at <a href="mailto:support@flashcardmaster.com">support@flashcardmaster.com</a>.
+            </p>
+        </div>
+        <p><a href="{{ url_for('decks') }}">Back to Decks</a></p>
+    </div>
+</body>
+</html>

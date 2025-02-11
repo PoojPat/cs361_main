@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Preview - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <div class="nav-bar">
+            <a href="{{ url_for('decks') }}">
+                <button>Decks</button>
+            </a>
+            <a href="{{ url_for('add_flashcards') }}">
+                <button>Add</button>
+            </a>
+            <a href="{{ url_for('help') }}">
+                <button>Help</button>
+            </a>
+        </div>
+        <div class="deck-stats">
+            <h2>{{ deck.name }}</h2>
+            <p>New: {{ deck.new }}</p>
+            <p>Learning: {{ deck.learn }}</p>
+            <p>Due: {{ deck.due }}</p>
+        </div>
+        <a href="{{ url_for('review_flashcards', deck_id=deck.id) }}">
+            <button>Study</button>
+        </a>
+        <p><a href="{{ url_for('decks') }}">Back to Decks</a></p>
+    </div>
+</body>
+</html>

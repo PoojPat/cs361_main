@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decks - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <div class="nav-bar">
+            <a href="{{ url_for('decks') }}">
+                <button>Decks</button>
+            </a>
+            <a href="{{ url_for('add_flashcards') }}">
+                <button>Add</button>
+            </a>
+            <a href="{{ url_for('help') }}">
+                <button>Help</button>
+            </a>
+        </div>
+        <div class="decks-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deck</th>
+                        <th>New</th>
+                        <th>Learn</th>
+                        <th>Due</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for deck in decks %}
+                    <tr>
+                        <td><a href="{{ url_for('review_preview', deck_id=deck.id) }}">{{ deck.name }}</a></td>
+                        <td>{{ deck.new }}</td>
+                        <td>{{ deck.learn }}</td>
+                        <td>{{ deck.due }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_deck', deck_id=deck.id) }}">
+                                <i class="fas fa-edit edit-icon"></i>
+                            </a>
+                            <!-- <i class="fas fa-edit edit-icon" onclick="window.location.href='{{ url_for('edit_deck', deck_id=deck.id) }}'"></i> -->
+                            <i class="fas fa-trash delete-icon" onclick="confirmDelete('{{ deck.id }}', '{{ deck.name }}')"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <a href="{{ url_for('create_deck') }}">
+                <button class="create-deck-btn">Create Deck</button>
+            </a>
+            <a href="{{ url_for('logout') }}">
+                <button class="logout-btn">Logout</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Confirmation Pop-up -->
+    <div id="deleteConfirmation" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to delete the deck "<span id="deckName"></span>"?</p>
+            <p><strong>*** Deleting the deck will result in the loss of all flashcards within the deck ***</strong></p>
+            <div class="modal-buttons">
+                <button onclick="deleteDeck()">Yes</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deckToDelete = null;
+
+        function confirmDelete(deckId, deckName) {
+            deckToDelete = deckId;
+            document.getElementById("deckName").textContent = deckName;
+            document.getElementById("deleteConfirmation").style.display = "block";
+        }
+
+        function deleteDeck() {
+            if (deckToDelete) {
+                fetch(`/delete_deck/${deckToDelete}`, { method: "POST" })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = "/decks";
+                        }
+                    });
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("deleteConfirmation").style.display = "none";
+        }
+
+        function editDeck(deckId) {
+            // Implement edit functionality later
+            alert("Edit deck with ID: " + deckId);
+        }
+    </script>
+</body>
+</html>

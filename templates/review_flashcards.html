@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Flashcards - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <div class="nav-bar">
+            <a href="{{ url_for('decks') }}">
+                <button>Decks</button>
+            </a>
+            <a href="{{ url_for('add_flashcards') }}">
+                <button>Add</button>
+            </a>
+            <a href="{{ url_for('help') }}">
+                <button>Help</button>
+            </a>
+        </div>
+        <div class="flashcard-container">
+            {% if flashcards %}
+            <div class="flashcard">
+                <div class="front">{{ flashcards[current_index].front }}</div>
+                <button onclick="showBack()" title="Shortcut Key: Space">Show Answer</button>
+                <div class="back" id="back" style="display: none;">
+                    {{ flashcards[current_index].back }}
+                    <button onclick="showExtra()" id="showExtraBtn" style="display: none;">Show Extra Info</button>
+                    <div class="extra" id="extra" style="display: none;">{{ flashcards[current_index].extra }}</div>
+                </div>
+                <div class="rating-buttons" id="ratingButtons" style="display: none;">
+                    <form method="POST" action="{{ url_for('rate_flashcard', flashcard_id=flashcards[current_index].id) }}">
+                        <input type="hidden" name="deck_id" value="{{ deck_id }}">
+                        <button type="submit" name="rating" value="again">Again</button>
+                        <button type="submit" name="rating" value="hard">Hard</button>
+                        <button type="submit" name="rating" value="good">Good</button>
+                        <button type="submit" name="rating" value="easy">Easy</button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <p>No flashcards to review in this deck.</p>
+            {% endif %}
+        </div>
+        
+        <script>
+            let currentIndex = {{ current_index }};
+            const flashcards = JSON.parse('{{ flashcards | tojson | safe }}');
+        
+            function showBack() {
+                document.getElementById("back").style.display = "block";
+                document.getElementById("ratingButtons").style.display = "flex";
+                document.getElementById("showExtraBtn").style.display = "block";
+            }
+        
+            function showExtra() {
+                document.getElementById("extra").style.display = "block";
+            }
+        
+            // Add spacebar shortcut
+            document.addEventListener("keydown", function(event) {
+                if (event.code === "Space") {
+                    showBack();
+                }
+            });
+        
+            // Cycle to the next flashcard after rating
+            document.querySelectorAll(".rating-buttons button").forEach(button => {
+                button.addEventListener("click", (event) => {
+                    event.preventDefault(); // Prevent form submission
+                    currentIndex = (currentIndex + 1) % flashcards.length;
+                    window.location.href = `/review_flashcards/{{ deck_id }}?current_index=${currentIndex}`;
+                });
+            });
+
+            // document.querySelectorAll(".rating-buttons button").forEach(button => {
+            //     button.addEventListener("click", () => {
+            //         currentIndex = (currentIndex + 1) % flashcards.length;
+            //         window.location.href = `/review_flashcards/{{ deck_id }}?current_index=${currentIndex}`;
+            //     });
+            // });
+        </script>
+</body>
+</html>

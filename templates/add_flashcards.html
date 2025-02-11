@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Flashcards - Flashcard Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            <h1>Flashcard Master</h1>
+        </div>
+        <form method="POST">
+            <label for="deck_id">Select Deck:</label>
+            <select id="deck_id" name="deck_id" required>
+                {% for deck in decks %}
+                <option value="{{ deck.id }}">{{ deck.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="front">Front of Flashcard:</label>
+            <textarea id="front" name="front" required></textarea>
+            <!-- <input type="text" id="front" name="front" required> -->
+
+            <label for="back">Back of Flashcard:</label>
+            <textarea id="back" name="back" required></textarea>
+            <!-- <input type="text" id="back" name="back" required> -->
+
+            <label for="extra">Extra Information (Optional):</label>
+            <textarea id="extra" name="extra"></textarea>
+
+            <button type="submit">Add Flashcard</button>
+        </form>
+        <p><a href="{{ url_for('decks') }}">Back to Decks</a></p>
+    </div>
+</body>
+</html>
